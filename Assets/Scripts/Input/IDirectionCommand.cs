@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Input
 {
-    public interface IHorizontalDirectionCommand
+    public interface IDirectionCommand
     {
-        void Execute(float horizontalDirection);
+        void Execute(float direction);
     }
 }

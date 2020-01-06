@@ -9,8 +9,8 @@ namespace Input
         public IImpulseCommand BCommand;
         public IImpulseCommand RightBumper;
         public IImpulseCommand LeftBumper;
-        public IVerticalDirectionCommand DPad_Horizontal;
-        public IVerticalDirectionCommand DPad_Vertical;
+        public IDirectionCommand DPad_Vertical;
+        public IDirectionCommand DPad_Horizontal;
         public void Update()
         {
 
