@@ -8,6 +8,6 @@ namespace Input
 {
     public interface IVerticalDirectionCommand
     {
-        void Execute();
+        void Execute(float verticalDirection);
     }
 }
