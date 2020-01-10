@@ -16,13 +16,13 @@ public class Grid<T>
 
     private void CreateGrid(int rows,int columns)
     {
-        T[,] _grid = new T[rows, columns];
-        for (int row = 0; row < _grid.GetLength(0); row++)
+        T[,] _tiles = new T[rows, columns];
+        for (int row = 0; row < _tiles.GetLength(0); row++)
         {
-            for (int column = 0; column < _grid.GetLength(1); column++)
+            for (int column = 0; column < _tiles.GetLength(1); column++)
             {
                 Debug.Log("Test");
-                _grid[row, column] = _tile;
+                _tiles[row, column] = _tile;
             }
         }
     }
