@@ -3,30 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid<T>
+namespace GridSystem
 {
-    public const int GridColumns = 3;
-    public const int GridRows = 3;
-
-    private T _tile;
-    public Grid(int rows = GridRows, int columns = GridColumns)
+    public class Grid<T,U> where T : new() where U : Component
     {
-        CreateGrid(rows, columns);
-    }
+        public const int GridColumns = 3;
+        public const int GridRows = 3;
+        public T[,] Tiles => _tiles;
 
-    private void CreateGrid(int rows,int columns)
-    {
-        T[,] _tiles = new T[rows, columns];
-        for (int row = 0; row < _tiles.GetLength(0); row++)
+        private T[,] _tiles;
+        private GridPresenter<T,U> _gridPresenter;
+        private Grid<T,U> lol;
+        public Grid(int rows = GridRows, int columns = GridColumns)
         {
-            for (int column = 0; column < _tiles.GetLength(1); column++)
+            CreateGrid(rows, columns);
+            _gridPresenter = new GridPresenter<T,U>(this);    
+        }
+
+        private void CreateGrid(int rows, int columns)
+        {
+            _tiles = new T[rows, columns];
+            for (int row = 0; row < _tiles.GetLength(0); row++)
             {
-                Debug.Log("Test");
-                _tiles[row, column] = _tile;
+                for (int column = 0; column < _tiles.GetLength(1); column++)
+                {
+                    T tile = new T();
+                    _tiles[row, column] = tile;
+                }
             }
         }
     }
-
 
     //public void Place(int row, int column)
     //{
