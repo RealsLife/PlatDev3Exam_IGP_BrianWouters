@@ -2,43 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TileSystem;
+using System;
+
 namespace GridSystem
 {
-    public class GridView<T,U> : MonoBehaviour where U : Component
+    [Serializable] public class GridView<U> : MonoBehaviour, IGridView where U : Component, ITileView, new()
     {
-        [SerializeField] U _tilePrefab;
+        public event EventHandler GridViewInitialize;
+        public GameObject GridContainer
+        {
+            set
+            {
+                GridViewInitialize?.Invoke(this, EventArgs.Empty);
+            }
+        }
+        [SerializeField] private U _tilePrefab;
         private Renderer _tileRenderer;
-        private U _tileView;
-        private void Start()
+        private Vector3 _tileViewSize;
+        private GameObject _gridContainer;
+
+        public void InitializeGridView(object sender, EventArgs e)
+        {
+            GetPrefabSize();
+        }
+        public ITileView CreateTileView(int gridRow, int gridColumn)
+        {     
+        U tileView = Instantiate(_tilePrefab, _gridContainer.transform);            
+        tileView.transform.position = new Vector3(gridColumn * _tileViewSize.x, 0, gridRow * _tileViewSize.z);
+        return tileView;
+        }    
+
+        private void GetPrefabSize()
         {
             _tileRenderer = _tilePrefab.GetComponent<Renderer>();
+            _tileViewSize = _tileRenderer.bounds.size;
         }
 
-        public void CreateTileView(T tile)
+        public void CreateGridViewContainer()
         {
-            _tileView = GameObject.Instantiate(_tilePrefab, this.transform);
+            _gridContainer = new GameObject("GridView");
+            _gridContainer.transform.parent = GameArena.Instance.transform;
         }
-
-        public void AllocateTilePosOnGrid(int row, int column)
-        {
-            Vector3 size = _tileRenderer.bounds.size;
-            _tileView.transform.localPosition = new Vector3(column * size.x, 0, row * size.z);
-        }
-
-
-
-
-            //Vector3 size = _renderer.bounds.size;
-            //GameObject jaja = GameObject.Instantiate(_tilePrefabssss, this.transform);
-            //GameObject.Instantiate<U>(_tilePrefab, this.transform);
-            //Instantiate<U>(_tilePrefab, this.transform);
-            //U test = jaja.GetComponent<U>();
-            //aa.transform.localPosition = new Vector3(tile.Column * size.x, 0, tile.Row * size.z);
-
-            //Vector3 size = _renderer.bounds.size;
-            //TileView aa = GameObject.Instantiate(_tilePrefab, this.transform);
-            //aa.transform.localPosition = new Vector3(tile.Column * size.x, 0, tile.Row * size.z);
-        
     }
 }
 
