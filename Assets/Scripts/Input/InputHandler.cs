@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityInput = UnityEngine.Input;
 
-namespace Input
+namespace InputSystem
 {
     public class InputHandler
     {
@@ -13,7 +13,6 @@ namespace Input
         public IDirectionCommand DPad_Horizontal;
         public void Update()
         {
-
             if (UnityInput.GetButtonDown("A"))
             {
                 ACommand.Execute();
