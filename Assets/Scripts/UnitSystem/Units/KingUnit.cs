@@ -37,9 +37,9 @@ namespace UnitSystem
            return false;
         }
 
-        public void Spawn()
+        public IUnit Spawn()
         {
-            new KingUnit();
+           return new KingUnit();
         }
     }
 }

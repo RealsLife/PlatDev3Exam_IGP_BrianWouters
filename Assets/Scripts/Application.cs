@@ -5,30 +5,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitChoiceSystem;
 using UnityEngine;
+using BuildQueueSystem;
+using UnitSystem;
 
 class Application : SingletonMonoBehaviour<Application>
     {
-    private InputHandler _inputHandler;
     public EventHandler Initialized;
-    event EventHandler ChangedCurrentCommands;
-    ICommands _currentActivatedCommands;
-    CommandsCarousel _commandCarousel;
+    public event EventHandler ChangedCurrentCommands;
     public ICommands CurrentActivatedCommands
     {
         set
-        {           
+        {
             _currentActivatedCommands = value;
             ChangedCurrentCommands?.Invoke(this, EventArgs.Empty);
         }
     }
+    public UnitChoice UnitChoice
+    {
+        get
+        {
+            return _unitChoice;  
+        }
+        set
+        {
+            _unitChoice = value;
+        }
+    }
+
+    [SerializeField] private UnitChoiceView _prefabUnitChoiceView;
+    [SerializeField] private BuildQueueView _prefabBuildQueueView;
+    private InputHandler _inputHandler;
+    private ICommands _currentActivatedCommands;
+    private CommandsCarousel _commandCarousel;
+    private UnitChoice _unitChoice;
+    private BuildQueue<IUnit> _builQueue;
+    public BuildQueue<IUnit> BuildQueue;
     public void Start()
     {
+        BuildQueue = new BuildQueue<IUnit>(_prefabBuildQueueView);
         _inputHandler = new InputHandler();
-        _commandCarousel = new CommandsCarousel();
-        Initialized?.Invoke(this, EventArgs.Empty);
         ChangedCurrentCommands += UpdateCurrentCommand;
-        StartCoroutine(LateInitialize());
+        _commandCarousel = new CommandsCarousel();
+        _unitChoice = new UnitChoice(_prefabUnitChoiceView);
+        Initialized?.Invoke(this, EventArgs.Empty);
     }
 
     private void UpdateCurrentCommand(object sender, EventArgs e)
@@ -40,10 +61,4 @@ class Application : SingletonMonoBehaviour<Application>
     {
         _inputHandler.Update();
     }
-
-    IEnumerator LateInitialize()
-    {
-        yield return new WaitForEndOfFrame();
-        Initialized?.Invoke(this, EventArgs.Empty);
-    } 
 }   

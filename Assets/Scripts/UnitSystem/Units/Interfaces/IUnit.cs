@@ -14,6 +14,6 @@ namespace UnitSystem
 
         bool Condition();
 
-        void Spawn();
+        IUnit Spawn();
     }
 }

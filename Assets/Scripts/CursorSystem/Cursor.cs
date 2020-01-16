@@ -9,12 +9,29 @@ namespace CursorSystem
 {
     class Cursor
     {
-        Vector2 _currentPos;
+        public Vector3 CurrentPos
+        {
+            get
+            {
+                return _currentPos;
+            }
+            set => _currentPos = value;
+        }
+        private Vector3 _currentPos;
 
-        //private void ResetCursor()
-        //{
-        //    _currentTile = _tiles[0, 0];
-        //    _currentTile.Selected = true;
-        //}
+        Cursor(Vector3 startPos)
+        {
+            _currentPos = startPos;
+        }
+
+        void CursorCheckBoundaries()
+        {
+
+        }
+
+        void CursorMove()
+        {
+
+        }
     }
 }

@@ -12,12 +12,12 @@ namespace InputSystem
         public void Execute(InputHandler inputHandler)
         {
 
-            inputHandler.ACommand = null;
-            inputHandler.BCommand = null;
-            inputHandler.DPad_Horizontal = null;
-            inputHandler.DPad_Vertical = null;
-            inputHandler.LeftBumper = null;
-            inputHandler.RightBumper = null;
+            inputHandler.ACommand = new SharedCommands.EmptyImpulseCommand();
+            inputHandler.BCommand = new SharedCommands.EmptyImpulseCommand();
+            inputHandler.DPad_Horizontal = new SharedCommands.EmptyDirectionCommand();
+            inputHandler.DPad_Vertical = new SharedCommands.EmptyDirectionCommand();
+            inputHandler.LeftBumper = new SharedCommands.EmptyImpulseCommand();
+            inputHandler.RightBumper = new SharedCommands.EmptyImpulseCommand();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace UnitSystem
 {
     class PawnUnit : IUnit
     {
-        private string _name = "King";
+        private string _name = "Pawn";
         private float _buildTime = 5;
         private bool _buildable;
         public string Name
@@ -37,9 +37,9 @@ namespace UnitSystem
             return BuildConditions.DependentOnUnits(6, 6);
         }
 
-        public void Spawn()
+        public IUnit Spawn()
         {
-            new PawnUnit();
+           return new PawnUnit();
         }
     }
 }

@@ -11,9 +11,11 @@ namespace GridSystem
         public event EventHandler GridViewInitialize;
         public GameObject GridContainer
         {
+            get { return _gridContainer; }
             set
             {
                 GridViewInitialize?.Invoke(this, EventArgs.Empty);
+                _gridContainer = value;
             }
         }
         [SerializeField] private U _tilePrefab;
@@ -40,8 +42,8 @@ namespace GridSystem
 
         public void CreateGridViewContainer()
         {
-            _gridContainer = new GameObject("GridView");
-            _gridContainer.transform.parent = GameArena.Instance.transform;
+            GridContainer = new GameObject("GridView");
+            GridContainer.transform.parent = GameArena.Instance.transform;
         }
     }
 }
